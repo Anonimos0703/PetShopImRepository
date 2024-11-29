@@ -7,13 +7,9 @@ __pycache__/
 # Virtual environments
 venv/
 env/
+myenv/
 
-# Django database
-db.sqlite3
 
-# Django static and media files
-/static/
-/media/
 
 # IDE files
 .idea/
