@@ -1,0 +1,616 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Tails & Whiskers</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .wrapcontainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -160px;
+            margin-bottom: 30px;
+            padding: 40px 0;
+            margin-left: 350px; 
+        }
+
+        .wrapcontainer img {
+            border-radius: 50%;
+            background-color: #d4d3ad;
+            padding: 30px;
+            text-align: center;
+            width: 360px;
+            height: 360px;
+            position: absolute;
+            left: 30%;
+            transform: translate(-50%, -50%) perspective(1000px) rotateX(10deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            overflow: hidden;
+            margin-top: 350px;
+            margin-left: 175px;   
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .wrapcontainer h2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 560px;
+            height: 300px;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: #d4d3ad;
+            margin-bottom: 30px;
+            margin-top: 200px;
+            margin-left: 210px;
+            text-align: center;
+            font-size: 3.5rem;
+            color: #080808;
+            font-family: 'Itim', cursive;
+
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(10deg);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg,
+                    #e0dfb8,
+                    #d4d3ad);
+            transition: all 0.3s ease;
+        }
+
+        .wrapcontainer h2:hover {
+            transform: perspective(1000px) rotateX(12deg);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 10px 20px rgba(0, 0, 0, 0.15),
+                inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .wrapcontainer img:hover {
+            transform: translate(-50%, -50%) perspective(1000px) rotateX(12deg);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 10px 20px rgba(0, 0, 0, 0.15),
+                inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .products {
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            margin-left: 250px;
+        }
+
+        .products h2 {
+            color: black;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .product .pet-icon {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            z-index: 1;
+        }
+
+        .product img.product-image {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .product img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .product h3 {
+            color: black;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .product p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .product button {
+            background-color: #6a3eff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product button:hover {
+            background-color: #4b29db;
+        }
+
+        .services {
+            padding: 40px 20px;
+            background-color: #fff;
+            text-align: center;
+            margin-left: 250px;
+        }
+
+        .services h2 {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #333;
+        }
+
+        .services h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #6a3eff;
+            margin: 10px auto;
+        }
+
+        .service-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .service-text {
+            max-width: 350px;
+            text-align: left;
+            font-size: 18px;
+            line-height: 1.5;
+            color: #666;
+            font-family: 'Georgia', serif;
+        }
+
+        .service-grid {
+            display: flex;
+            gap: 40px;
+        }
+
+        .service {
+            text-align: center;
+            width: 200px;
+        }
+
+        .service img {
+            width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .service h3 {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .service button {
+            background-color: #0fc0fc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .service button:hover {
+            background-color: #0a96c2;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-overlay {
+            position: absolute;
+            top: -35px;
+            left: 25%;
+            transform: translateX(-60%);
+        }
+
+        .service-overlay {
+            position: static;
+            text-align: center;
+        }
+
+        footer {
+            background-color: beige;
+            color: black;
+            padding: 0px 20px;
+            display: flex;
+            outline: 2px solid black;   
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .footer-overlay {
+            text-align: center;
+            flex: 1;
+        }
+
+        .footer-overlay img {
+            width: 300px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            margin-top: -70px;
+        }
+
+        .contact-info {
+            position: absolute;
+            right: 20px;
+            top: 20%;
+            transform: translateY(-50%);
+            text-align: right;
+            color: black;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #000000;
+            margin-top: -30px;
+            font-size: 15px;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .product-carousel {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 20px;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background: beige;
+        }
+
+        .carousel-button.prev {
+            left: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+        }
+
+        .product {
+            flex: 0 0 calc(33.333% - 20px);
+            min-width: 250px;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .product {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product {
+                flex: 0 0 calc(100% - 20px);
+            }
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #FFFDB5;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+
+        .sidebar h3 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-bottom: 5px;    
+        }
+
+        .sidebar a {
+            display: block;
+            color: #0b0b0b;
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #6a3eff;
+            color: white;
+        }
+
+        .sidebar .user-menu img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .decorative-image {
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: 10px;
+        }
+
+
+        .decorative-image.left {
+            left: 20px;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.product-track');
+            const products = track.getElementsByClassName('product');
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const nextButton = document.querySelector('.carousel-button.next');
+            
+            let currentPosition = 0;
+            const productsPerView = window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1;
+            const totalSlides = Math.ceil(products.length / productsPerView);
+            
+            function updateCarousel() {
+                const slideWidth = products[0].offsetWidth + 20; // Add gap
+                track.style.transform = `translateX(${-currentPosition * slideWidth}px)`;
+            }
+            
+            function moveToSlide(direction) {
+                const slideWidth = products[0].offsetWidth + 20;
+                const maxPosition = products.length - productsPerView;
+                
+                if (direction === 'next') {
+                    currentPosition = currentPosition >= maxPosition ? 0 : currentPosition + 1;
+                } else {
+                    currentPosition = currentPosition <= 0 ? maxPosition : currentPosition - 1;
+                }
+                
+                updateCarousel();
+            }
+            
+          
+            prevButton.addEventListener('click', () => moveToSlide('prev'));
+            nextButton.addEventListener('click', () => moveToSlide('next'));
+            
+            
+            window.addEventListener('resize', () => {
+                updateCarousel();
+            });
+            
+          
+            setInterval(() => moveToSlide('next'), 5000);
+        });
+        </script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Tails and Whiskers</h2>
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">
+                    <i class="bi bi-house-door-fill"></i> Home</a>
+                <a href="{% url 'inventory_list' %}">
+                    <i class="bi bi-backpack4-fill"></i> Inventory</a>
+                <a href="{% url 'admin_appointment_list' %}">
+                    <i class="bi bi-calendar-week-fill"></i> Appointments</a>
+                <a href="{% url 'admin_cart' %}">
+                    <i class="bi bi-cart-plus-fill"></i> Orders</a>
+            {% else %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">
+                    <i class="bi bi-house-door-fill"></i> Home</a>
+                <a href="{% url 'uproduct_list' %}">
+                    <i class="bi bi-bag-fill"></i> Products</a>
+                <a href="{% url 'service' %}">
+                    <i class="bi bi-person-fill-gear"></i> Service</a>
+                <a href="{% url 'aboutus' %}">
+                    <i class="bi bi-people-fill"></i> About Us</a>
+                <a href="{% url 'cart' %}">
+                    <i class="bi bi-cart-fill"></i> Cart</a>
+                <a href="{% url 'appointment_list' %}">
+                    <i class="bi bi-calendar-week-fill"></i> Appointment</a>
+            {% endif %}
+            
+            <br>
+
+            <h3>Account:</h3>
+            <a href="{% url 'profile' %}">
+                <i class="bi bi-person-circle"></i> Profile</a>
+            <a href="{% url 'logout_view' %}">
+                <i class="bi bi-box-arrow-right"></i> Logout</a>
+        {% else %}
+            <h3>Overview:</h3>
+            
+            <a href="{% url 'home' %}">
+                <i class="bi bi-house-door-fill"></i> Home</a>
+            <a href="{% url 'uproduct_list' %}">
+                <i class="bi bi-bag-fill"></i> Products</a>
+            <a href="{% url 'service' %}">
+                <i class="bi bi-person-fill-gear"></i> Service</a>
+            <a href="{% url 'aboutus' %}">
+                <i class="bi bi-people-fill"></i> About Us</a>
+            <a href="{% url 'login' %}">
+                <i class="bi bi-box-arrow-right"></i> Login</a>
+        {% endif %}
+    </div>
+    
+    <div class="wrapcontainer">
+        <h2>Welcome Furry Friends!</h2>
+        <img src="{% static 'images/homeanimation.gif' %}">
+    </div>
+
+    <section class="products">
+        <br>
+        <h2>Products</h2>
+        <div class="carousel-container">
+            <button class="carousel-button prev">&lt;</button>
+            <div class="product-carousel">
+                <div class="product-track">
+                    {% for product in products %}
+                        <div class="product">
+                            <img class="pet-icon" src="{% static 'images/peticon.png' %}" alt="Pet Icon">
+                            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>₱{{ product.price }}</p>
+                            <a href="{% url 'product_details' product.id %}">
+                                <button>Check Product Details</button>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="carousel-button next">&gt;</button>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="service-overlay">
+            <h2>We offer services</h2>
+        </div>
+        <div class="service-content">
+            <div class="service-text">
+                <p>
+                    A happy pet is always clean and well-cared for! Your furry friends deserve top-notch grooming and a
+                    safe place to stay. At Tails & Whiskers, we offer both pet grooming and boarding to ensure they get
+                    the best care.
+                </p>
+            </div>
+            <div class="service-grid">
+                <div class="service">
+                    &nbsp;
+                    <img src="{% static 'images/grooming.png' %}" alt="Pet Grooming">
+                    <h3>Pet Grooming</h3>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'appointment' %}">
+                        <button>Book now</button>
+                    </a>
+                    {% else %}
+                    <button> Log in to book</button>
+                    {% endif %}
+                </div>
+                <div class="service">
+                    <img src="{% static 'images/boarding.jpg' %}" alt="Pet Boarding">
+                    <h3>Pet Boarding</h3>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'appointment' %}">
+                        <button>Book now</button>
+                    </a>
+                    {% else %}
+                    <button> Log in to book</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-overlay">
+            <img src="{% static 'images/logo.png' %}" alt="Tails & Whiskers">
+            <p class="copyright">@ All Rights Reserved</p>
+        </div>
+        <div class="contact-info">
+            <p>Phone: +63 999 999 9999</p>
+            <p>Address: Cebu, PH</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f4e3; 
+            color: #333; 
+        }
+        h1, h2 {
+            margin-top: 150px;
+            text-align: center;
+            color: #5a4d41; 
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff; 
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            color: #5a4d41; 
+        }
+        th {
+            background-color: #f5e9d4; 
+            font-weight: bold;
+        }
+        td {
+            background-color: #fbf7f0; 
+        }
+        .button-container {
+            text-align: right;
+            margin: 20px;
+        }
+        .button-container a button {
+            
+            padding: 10px 20px;
+            background-color: #5a4d41; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button-container a button:hover {
+            background-color: #8c7a66; 
+        }
+        .button-container a {
+            text-decoration: none;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2e9db; 
+        }
+        table thead {
+            background-color: #e0d2b9; 
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>Date Added: {{ inventory.date_added }}</h2>
+
+    <div class="button-container">
+        <a href="{% url 'inventory_list' %}"><button>Back to Inventory List</button></a>
+    </div>
+    <h3>Products in this Inventory:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+</body>
+</html>

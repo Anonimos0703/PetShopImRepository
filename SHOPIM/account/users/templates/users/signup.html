@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    {% load static %}
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f5e9; /* Light beige background */
+        }
+
+        /* Container for Form Sections */
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Left Section Styling */
+        .left-section {
+            width: 50%;
+            background-color: #FFFDB5;
+            padding: 60px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-container img {
+            width: 150px; /* Adjust logo size */
+            margin-bottom: 20px;
+        }
+
+        .left-section h1 {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .left-section h2 {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .animation {
+            display: flex;
+            /* Enable flexbox layout */
+            justify-content: center;
+            /* Center the images horizontally (optional) */
+            align-items: center;
+            /* Align items vertically (optional) */
+            flex-wrap: wrap;
+            /* Allows wrapping if the screen is small */
+            margin-top: -45px;
+        }
+
+        .animation img {
+            width: 100px;
+            /* Adjust width as needed */
+            height: auto;
+            /* Keeps the aspect ratio */
+            margin-right: 10px;
+            /* Space between images */
+        }
+
+        .animation img:last-child {
+            margin-right: 0;
+            /* Remove margin for the last image */
+        }
+
+        /* Right Section Styling */
+        .right-section {
+            width: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            box-sizing: border-box;
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 20px 30px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: green; /* Orange color */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2:before {
+            content: "🐾"; /* Paw emoji as a prefix */
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Form Input Styling */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: green;
+            box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+            background-color: green;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #7fee54;
+        }
+
+        /* Link Styling */
+        a {
+            color: green;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Error Alert */
+        .alert {
+            padding: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            .left-section {
+                width: 100%;
+                padding: 40px;
+                text-align: center;
+            }
+
+            .right-section {
+                width: 100%;
+                padding: 30px 20px;
+            }
+        }
+
+        .form-container a.back{
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            color: green;
+            font-size: 0.9rem;
+            text-decoration: none;
+            
+        }   
+
+        .petball-image {
+            width: 60px;
+            height: auto;
+            position: absolute;
+            opacity: 0.5;
+            transition: transform 0.3s ease;
+        }
+
+        .petball-1 {
+        top: 80px;
+        left: 100px;
+        transform: rotate(15deg);
+        animation: bounce 3s infinite ease-in-out;
+    }
+
+    .petball-2 {
+        top: 100px;
+        right: 60px;
+        transform: rotate(-20deg);
+        animation: bounce 2.5s infinite ease-in-out;
+    }
+
+    .petball-3 {
+        top: 350px;
+        left: 200px;
+        transform: rotate(30deg);
+        animation: bounce 4s infinite ease-in-out;
+    }
+
+    .petball-4 {
+        top: 380px;
+        right: 70px;
+        transform: rotate(-25deg);
+        animation: bounce 3.5s infinite ease-in-out;
+    }
+
+    .petball-5 {
+        bottom: 150px;
+        left: 90px;
+        transform: rotate(-15deg);
+        animation: bounce 3.8s infinite ease-in-out;
+    }
+
+    .petball-6 {
+        bottom: 180px;
+        right: 50px;
+        transform: rotate(20deg);
+        animation: bounce 4.2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0) rotate(var(--rotation));
+        }
+        50% {
+            transform: translateY(-10px) rotate(var(--rotation));
+        }
+    }
+  
+    .brokenline-image {
+        position: absolute;
+        opacity: 0.4;
+        transition: transform 0.3s ease;
+    }
+
+    .line-horizontal {
+        width: 150px;
+        height: auto;
+    }
+
+    .line-vertical {
+        width: 100px;
+        height: auto;
+        transform: rotate(90deg);
+    }
+
+    .line-h1 {
+        top: 20px;
+        left: 250px;
+    }
+
+    .line-h2 {
+        top: 20px;
+        right: 250px;
+    }
+
+    .line-h3 {
+        top: 300px;
+        left: 290px;
+    }
+
+    .line-h4 {
+        top: 300px;
+        right: 270px;
+    }
+
+    .line-h5 {
+        bottom: 100px;
+        left: 160px;
+    }
+
+    .line-h6 {
+        bottom: 100px;
+        right: 260px;
+    }
+
+    .line-v1 {
+        top: 150px;
+        left: 320px;
+    }
+
+    .line-v2 {
+        top: 150px;
+        right: 320px;
+    }
+
+    .line-v3 {
+        bottom: 150px;
+        left: 160px;
+    }
+
+    .line-v4 {
+        bottom: 150px;
+        right: 320px;
+    }
+
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.5; }
+    }
+
+    .brokenline-image {
+        animation: fadeInOut 4s infinite ease-in-out;
+    }
+
+    .line-h1, .line-v1 { animation-delay: 0s; }
+    .line-h2, .line-v2 { animation-delay: 0.5s; }
+    .line-h3, .line-v3 { animation-delay: 1s; }
+    .line-h4, .line-v4 { animation-delay: 1.5s; }
+    .line-h5 { animation-delay: 2s; }
+    .line-h6 { animation-delay: 2.5s; }
+
+    .paw-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .paw-image {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            opacity: 0.6;
+            transition: transform 0.3s ease;
+        }
+
+        .paw-1 {
+            top: 40px;
+            left: 550px;
+            transform: rotate(-15deg);
+        }
+
+        .paw-2 {
+            top: 60px;
+            right: 120px;
+            transform: rotate(25deg);
+        }
+
+        .paw-3 {
+            top: 200px;
+            left: 450px;
+            transform: rotate(-45deg);
+        }
+
+        .paw-4 {
+            top: 200px;
+            right: 90px;
+            transform: rotate(45deg);
+        }
+
+        .paw-5 {
+            bottom: 100px;
+            left: 420px;
+            transform: rotate(-160deg);
+        }
+
+        .paw-6 {
+            bottom: 120px;
+            right: 110px;
+            transform: rotate(160deg);
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <!-- <div class="logo-container">
+                <img src="{% static 'images/logo.png' %}" alt="Tails and Whiskers Logo">
+            </div> -->
+            <h1>Tails and Whiskers</h1>
+            <h2>Where Your Pet's Happiness, Is Our Priority!</h2>
+            <div class="animation">
+                <img src="{% static 'images/animation.gif' %}" alt="Animation">
+                <img src="{% static 'images/animation.gif' %}" alt="Animation">
+                <img src="{% static 'images/animation.gif' %}" alt="Animation">
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="form-container">
+                <a href="{% url 'home' %}" class="back">←</a>
+                <h2>Create Your Account!</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group side-by-side">
+                        <div>
+                            <label for="first_name">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div>
+                            <label for="last_name">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group side-by-side">
+                        <div>
+                            <label for="password1">Password</label>
+                            {{ form.password1 }}
+                            {% if form.password1.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for error in form.password1.errors %}
+                                <span>{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="password2">Confirm Password</label>
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for error in form.password2.errors %}
+                                <span>{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Sign Up</button>
+                         
+                    </div>
+                    <a href="{% url 'login' %}">Already have an account? Login</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="decoration-container">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-1">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-2">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-3">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-4">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-5">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-6">
+        
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-1">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-2">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-3">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-4">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-5">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-6">
+
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h1">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h2">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h3">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h4">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h5">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h6">
+
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v1">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v2">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v3">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v4">
+    </div>
+</body>
+
+</html>

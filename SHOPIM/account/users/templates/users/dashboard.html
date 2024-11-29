@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tails and Whiskers</title>
+    <style>
+        /* Copy your existing header styles */
+        
+        .dashboard-container {
+            margin-top: 80px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .dashboard-card {
+            background: rgba(242, 236, 159, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .appointments-section {
+            margin-top: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Include your header -->
+    {% include 'header.html' %}
+
+    <div class="dashboard-container">
+        <div class="dashboard-card welcome-section">
+            <h2>Welcome, {{ user.username }}!</h2>
+            <p>Manage your pet care appointments and information here.</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Quick Actions</h3>
+           
+
+        </div>
+
+        <div class="dashboard-card appointments-section">
+            <h3>Recent Appointments</h3>
+            {% if appointments %}
+                {% for appointment in appointments %}
+                    <div class="appointment-card">
+                        <h4>{{ appointment.booking_type }}</h4>
+                        <p>Date: {{ appointment.date }}</p>
+                        <p>Time: {{ appointment.time }}</p>
+                        <p>Status: {{ appointment.status }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No appointments scheduled.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

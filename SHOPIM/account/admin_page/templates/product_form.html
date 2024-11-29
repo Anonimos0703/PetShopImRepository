@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Create Product</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff; 
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(90, 77, 65, 0.1);
+            margin-left: 700px; 
+            margin-top: 50px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #5a4d41; 
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-column {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            display: block;
+            margin: 10px 0 8px;
+            color: #5a4d41; 
+            font-weight: 500;
+        }
+        input[type="text"], 
+        input[type="number"], 
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #d1c4b8;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, 
+        input[type="number"]:focus, 
+        select:focus {
+            outline: none;
+            border-color: #8c7a66;
+        }
+        .submit-section {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button[type="submit"] {
+            width: 50%;
+            padding: 12px;
+            background-color: #5a4d41; 
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin-bottom: 15px;
+        }
+        button[type="submit"]:hover {
+            background-color: #8c7a66; 
+        }
+        button[type="submit"]:active {
+            transform: scale(0.98);
+        }
+        .container a {
+            text-align: center;
+            text-decoration: none;
+            color: #5a4d41; 
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #8c7a66; 
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                max-width: 500px;
+            }
+            form {
+                grid-template-columns: 1fr;
+            }
+            button[type="submit"] {
+                width: 100%;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group p {
+            margin-bottom: 8px;
+        }
+        .form-group ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #FFFDB5;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+
+        .sidebar h3 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-bottom: 5px;    
+        }
+
+        .sidebar a {
+            display: block;
+            color: #0b0b0b;
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #6a3eff;
+            color: white;
+        }
+
+        .sidebar .user-menu img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .paw-decor {
+            width: 50px;
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .paw-large {
+            width: 100px;
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>
+            <img src="{% static 'images/paw1.png' %}" class="paw-decor" style="top: -20px; left: 10px; transform: rotate(-45deg);">
+            Tails and Whiskers
+            <img src="{% static 'images/paw1.png' %}" class="paw-decor" style="top: -20px; right: 10px; transform: rotate(45deg);">
+        </h2> 
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">
+                    <i class="bi bi-house-door-fill"></i> Home</a>
+                <a href="{% url 'inventory_list' %}">
+                    <i class="bi bi-backpack4-fill"></i> Inventory</a>
+                <a href="{% url 'admin_appointment_list' %}">
+                    <i class="bi bi-calendar-week-fill"></i> Appointments</a>
+                <a href="{% url 'admin_cart' %}">
+                    <i class="bi bi-cart-plus-fill"></i> Orders</a>
+            {% else %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">
+                    <i class="bi bi-house-door-fill"></i> Home</a>
+                <a href="{% url 'uproduct_list' %}">
+                    <i class="bi bi-bag-fill"></i> Products</a>
+                <a href="{% url 'service' %}">
+                    <i class="bi bi-person-fill-gear"></i> Service</a>
+                <a href="{% url 'aboutus' %}">
+                    <i class="bi bi-people-fill"></i> About Us</a>
+                <a href="{% url 'cart' %}">
+                    <i class="bi bi-cart-fill"></i> Cart</a>
+                <a href="{% url 'appointment_list' %}">
+                    <i class="bi bi-calendar-week-fill"></i> Appointment</a>
+            {% endif %}
+            
+            <br>
+
+            <h3>Account:</h3>
+            <a href="{% url 'profile' %}">
+                <i class="bi bi-person-circle"></i> Profile</a>
+            <a href="{% url 'logout_view' %}">
+                <i class="bi bi-box-arrow-right"></i> Logout</a>
+        {% else %}
+            <h3>Overview:</h3>
+            
+            <a href="{% url 'home' %}">
+                <i class="bi bi-house-door-fill"></i> Home</a>
+            <a href="{% url 'uproduct_list' %}">
+                <i class="bi bi-bag-fill"></i> Products</a>
+            <a href="{% url 'service' %}">
+                <i class="bi bi-person-fill-gear"></i> Service</a>
+            <a href="{% url 'aboutus' %}">
+                <i class="bi bi-people-fill"></i> About Us</a>
+            <a href="{% url 'login' %}">
+                <i class="bi bi-box-arrow-right"></i> Login</a>
+        {% endif %}
+    </div>
+
+    <img src="{% static 'images/paw1.png' %}" class="paw-large" style="position: absolute; bottom: 50px; left: 50px; transform: rotate(-20deg);">
+<img src="{% static 'images/paw1.png' %}" class="paw-large" style="position: absolute; bottom: 50px; right: 50px; transform: rotate(20deg);">
+
+    <div class="container">
+        <h1>Create New Product</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}  
+            <div class="submit-section">
+                <button type="submit">Save Product</button>
+                <a href="{% url 'inventory_list' %}">Back to Product List</a>
+            </div>
+        </form>
+        <img src="{% static 'images/paw1.png' %}" class="paw-decor" style="top: -20px; left: 10px; transform: rotate(-45deg);">
+        <img src="{% static 'images/paw1.png' %}" class="paw-decor" style="top: -20px; right: 10px; transform: rotate(45deg);">
+    </div>
+</body>
+</html>

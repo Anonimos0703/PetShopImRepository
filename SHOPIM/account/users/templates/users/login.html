@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <style>
+        body {
+            margin: 0;
+            padding: 50px;
+            height: calc(100vh - 100px); /* Account for 50px margin on top and bottom */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: beige;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        /* Left section (Logo & Welcome Text) */
+        .left-section {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #FFFDB5;
+            padding: 20px;
+        }
+
+        .left-section img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .left-section h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 0;
+            text-align: center;
+        }
+
+        .left-section h2 {
+            font-size: 1rem;
+            color: #666;
+            margin: 10px 0 20px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Right section (Form) */
+        .right-section {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 350px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #7fee54;
+        }
+
+        .form-container a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: green;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .form-container a.back{
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            color: green;
+            font-size: 0.9rem;
+            text-decoration: none;
+            
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 100%;
+                margin: 0 20px;
+            }
+
+            .left-section,
+            .right-section {
+                width: 100%;
+                text-align: center;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+        .animation {
+            display: flex;
+            /* Enable flexbox layout */
+            justify-content: center;
+            /* Center the images horizontally (optional) */
+            align-items: center;
+            /* Align items vertically (optional) */
+            flex-wrap: wrap;
+            /* Allows wrapping if the screen is small */
+            margin-top: -45px;
+        }
+
+        .animation img {
+            width: 100px;
+            /* Adjust width as needed */
+            height: auto;
+            /* Keeps the aspect ratio */
+            margin-right: 10px;
+            /* Space between images */
+        }
+
+        .animation img:last-child {
+            margin-right: 0;
+            /* Remove margin for the last image */
+        }
+
+        .petball-image {
+            width: 60px;
+            height: auto;
+            position: absolute;
+            opacity: 0.5;
+            transition: transform 0.3s ease;
+        }
+
+        .petball-1 {
+        top: 80px;
+        left: 100px;
+        transform: rotate(15deg);
+        animation: bounce 3s infinite ease-in-out;
+    }
+
+    .petball-2 {
+        top: 100px;
+        right: 60px;
+        transform: rotate(-20deg);
+        animation: bounce 2.5s infinite ease-in-out;
+    }
+
+    .petball-3 {
+        top: 350px;
+        left: 200px;
+        transform: rotate(30deg);
+        animation: bounce 4s infinite ease-in-out;
+    }
+
+    .petball-4 {
+        top: 380px;
+        right: 70px;
+        transform: rotate(-25deg);
+        animation: bounce 3.5s infinite ease-in-out;
+    }
+
+    .petball-5 {
+        bottom: 150px;
+        left: 90px;
+        transform: rotate(-15deg);
+        animation: bounce 3.8s infinite ease-in-out;
+    }
+
+    .petball-6 {
+        bottom: 180px;
+        right: 50px;
+        transform: rotate(20deg);
+        animation: bounce 4.2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0) rotate(var(--rotation));
+        }
+        50% {
+            transform: translateY(-10px) rotate(var(--rotation));
+        }
+    }
+  
+    .brokenline-image {
+        position: absolute;
+        opacity: 0.4;
+        transition: transform 0.3s ease;
+    }
+
+    .line-horizontal {
+        width: 150px;
+        height: auto;
+    }
+
+    .line-vertical {
+        width: 100px;
+        height: auto;
+        transform: rotate(90deg);
+    }
+
+    .line-h1 {
+        top: 20px;
+        left: 250px;
+    }
+
+    .line-h2 {
+        top: 20px;
+        right: 250px;
+    }
+
+    .line-h3 {
+        top: 300px;
+        left: 290px;
+    }
+
+    .line-h4 {
+        top: 300px;
+        right: 270px;
+    }
+
+    .line-h5 {
+        bottom: 100px;
+        left: 160px;
+    }
+
+    .line-h6 {
+        bottom: 100px;
+        right: 260px;
+    }
+
+    .line-v1 {
+        top: 150px;
+        left: 320px;
+    }
+
+    .line-v2 {
+        top: 150px;
+        right: 320px;
+    }
+
+    .line-v3 {
+        bottom: 150px;
+        left: 160px;
+    }
+
+    .line-v4 {
+        bottom: 150px;
+        right: 320px;
+    }
+
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.5; }
+    }
+
+    .brokenline-image {
+        animation: fadeInOut 4s infinite ease-in-out;
+    }
+
+    .line-h1, .line-v1 { animation-delay: 0s; }
+    .line-h2, .line-v2 { animation-delay: 0.5s; }
+    .line-h3, .line-v3 { animation-delay: 1s; }
+    .line-h4, .line-v4 { animation-delay: 1.5s; }
+    .line-h5 { animation-delay: 2s; }
+    .line-h6 { animation-delay: 2.5s; }
+
+    .paw-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .paw-image {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            opacity: 0.6;
+            transition: transform 0.3s ease;
+        }
+
+        .paw-1 {
+            top: 40px;
+            left: 550px;
+            transform: rotate(-15deg);
+        }
+
+        .paw-2 {
+            top: 60px;
+            right: 120px;
+            transform: rotate(25deg);
+        }
+
+        .paw-3 {
+            top: 200px;
+            left: 450px;
+            transform: rotate(-45deg);
+        }
+
+        .paw-4 {
+            top: 200px;
+            right: 90px;
+            transform: rotate(45deg);
+        }
+
+        .paw-5 {
+            bottom: 100px;
+            left: 420px;
+            transform: rotate(-160deg);
+        }
+
+        .paw-6 {
+            bottom: 120px;
+            right: 110px;
+            transform: rotate(160deg);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <!-- <img src="{% static 'images/logo.png' %}" alt="Tails and Whiskers Logo"> -->
+            <h1>Tails & Whiskers</h1>
+            <h2>Where Your Pet's Happiness Is Our Priority!</h2>
+            <div class="animation">
+                <img src="{% static 'images/animation.gif' %}">
+                <img src="{% static 'images/animation.gif' %}">
+                <img src="{% static 'images/animation.gif' %}">
+
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="form-container">
+                <a href="{% url 'home' %}" class="back"> ← </a>
+                <h2>Welcome Back</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label for="username">Email</label>
+                        {{ form.username }}
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        {{ form.password }}
+                    </div>
+                    {% if messages %}
+                        <div class="alert-container">
+                            {% for message in messages %}
+                                {% if message.tags != "insufficient-stock" %}
+                                    <div class="alert alert-{{ message.tags }}" style="color: red;">{{ message }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <button type="submit">Log In</button>
+                    <a href="{% url 'signup' %}">Don't have an account? Sign Up</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="decoration-container">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-1">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-2">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-3">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-4">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-5">
+        <img src="{% static 'images/paw1.png' %}" alt="Paw Icon" class="paw-image paw-6">
+        
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-1">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-2">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-3">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-4">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-5">
+        <img src="{% static 'images/petball.png' %}" alt="Pet Ball" class="petball-image petball-6">
+
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h1">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h2">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h3">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h4">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h5">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-horizontal line-h6">
+
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v1">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v2">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v3">
+        <img src="{% static 'images/brokenline.png' %}" alt="Broken Line" class="brokenline-image line-vertical line-v4">
+    </div>
+</body>
+
+</html>

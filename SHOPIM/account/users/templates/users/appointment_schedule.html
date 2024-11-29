@@ -1,0 +1,450 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>My Appointments</title>
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #FFFDB5;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+
+        .sidebar h3 {
+            font-family: 'Itim', cursive;
+            color: black;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-bottom: 5px;    
+        }
+
+        .sidebar a {
+            display: block;
+            color: #0b0b0b;
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #6a3eff;
+            color: white;
+        }
+
+        .sidebar .user-menu img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        main {
+            padding: 2rem;
+            margin-left: 280px;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .appointments-section {
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-align: left;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .appointment-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .appointment-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-icon {
+            width: 80px;
+            height: 80px;
+            margin-right: 1.5rem;
+            object-fit: cover;
+        }
+
+        .appointment-content {
+            flex: 1;
+        }
+
+        .appointment-box h3 {
+            margin: 0 0 1rem 0;
+            color: #000000;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .appointment-box h3 img {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.5rem;
+        }
+
+        .appointment-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .appointment-details span {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .appointment-details strong {
+            color: #4a5568;
+        }
+
+        .no-appointments {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            color: #64748b;
+            font-size: 1.1rem;
+            border: 2px dashed #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .no-appointments img {
+            width: 120px;
+            height: 120px;
+            opacity: 0.7;
+        }
+
+        .calendar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 2rem;
+            margin-left: 0px;
+            margin-top: 130px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            gap: 0.5rem;
+        }
+
+        .calendar-header img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;    
+            text-align: center;
+        }
+
+        .calendar-day-header {
+            font-weight: 600;
+            color: #4a5568;
+            padding: 0.5rem;
+        }
+
+        .calendar-day {
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+
+        .calendar-day.with-appointment::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #6a3eff;
+            border-radius: 50%;
+        }
+
+        .calendar-day.other-month {
+            color: #a0aec0;
+        }
+
+        .calendar-day.today {
+            background-color: #6a3eff;
+            color: white;
+            font-weight: 600;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-header img {
+            width: 40px;
+            height: 40px;
+        }
+
+        @media (max-width: 1200px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar {
+                position: static;
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin-left: 0;
+                padding: 1rem;
+                margin-top: 60px;
+            }
+
+            .appointment-details {
+                grid-template-columns: 1fr;
+            }
+
+            .appointment-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .appointment-icon {
+                margin: 0 0 1rem 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Tails and Whiskers</h2>
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'inventory_list' %}">Inventory</a>
+                <a href="{% url 'admin_appointment_list' %}">Appointments</a>
+                <a href="{% url 'admin_cart' %}">Orders</a>
+                <a href="{% url 'admin:index' %}">Admin</a>
+            {% else %}
+                <h3>Overview:</h3>
+                <a href="{% url 'home' %}">
+                    <i class="bi bi-house-door-fill"></i> Home</a>
+                <a href="{% url 'uproduct_list' %}">
+                    <i class="bi bi-bag-fill"></i> Products</a>
+                <a href="{% url 'service' %}">
+                    <i class="bi bi-person-fill-gear"></i> Service</a>
+                <a href="{% url 'aboutus' %}">
+                    <i class="bi bi-people-fill"></i> About Us</a>
+                <a href="{% url 'cart' %}">
+                    <i class="bi bi-cart-fill"></i> Cart</a>
+                <a href="{% url 'appointment_list' %}">
+                    <i class="bi bi-calendar-week-fill"></i> Appointment</a>
+            {% endif %}
+            
+            <br>
+
+            <h3>Account:</h3>
+            <a href="{% url 'profile' %}">
+                <i class="bi bi-person-circle"></i> Profile</a>
+            <a href="{% url 'logout_view' %}">
+                <i class="bi bi-box-arrow-right"></i> Logout</a>
+        {% else %}
+            <h3>Overview:</h3>
+            
+            <a href="{% url 'home' %}">
+                <i class="bi bi-house-door-fill"></i> Home</a>
+            <a href="{% url 'uproduct_list' %}">
+                <i class="bi bi-bag-fill"></i> Products</a>
+            <a href="{% url 'service' %}">
+                <i class="bi bi-person-fill-gear"></i> Service</a>
+            <a href="{% url 'aboutus' %}">
+                <i class="bi bi-people-fill"></i> About Us</a>
+            <a href="{% url 'login' %}">
+                <i class="bi bi-box-arrow-right"></i> Login</a>
+        {% endif %}
+    </div>
+  
+    <main>
+        <div class="appointments-section">
+            <div class="page-header">
+                <img src="{% static 'images/dogbath.png' %}" alt="Scissors icon">
+                <h1>My Appointments</h1>
+            </div>
+            {% if appointments %}
+                {% for appointment in appointments %}
+                    <div class="appointment-box">
+                        {% if appointment.booking_type == 'Grooming' %}
+                            <img src="{% static 'images/doggrooming.png' %}" alt="Grooming icon" class="appointment-icon">
+                        {% elif appointment.booking_type == 'Boarding' %}
+                            <img src="{% static 'images/pethouse.png' %}" alt="Boarding icon" class="appointment-icon">
+                        {% endif %}
+                        <div class="appointment-content">
+                            <h3>
+                                {% if appointment.booking_type == 'Grooming' %}
+                                    <img src="{% static 'images/scissors.png' %}" alt="Service icon">
+                                {% elif appointment.booking_type == 'Boarding' %}
+                                    <img src="{% static 'images/shampoo.png' %}" alt="Service icon">
+                                {% endif %}
+                                {{ appointment.booking_type }}
+                            </h3>
+                            <div class="appointment-details">
+                                <span><strong>Date:</strong> {{ appointment.date }}</span>
+                                <span><strong>Time:</strong> {{ appointment.time }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-appointments">
+                    <img src="{% static 'images/catgroom.png' %}" alt="No appointments">
+                    <p>You have no appointments scheduled</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="calendar">
+            <div class="calendar-header">
+                <img src="{% static 'images/calendaricon.png' %}" alt="Calendar icon">
+                December 2024
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-header">Sun</div>
+                <div class="calendar-day-header">Mon</div>
+                <div class="calendar-day-header">Tue</div>
+                <div class="calendar-day-header">Wed</div>
+                <div class="calendar-day-header">Thu</div>
+                <div class="calendar-day-header">Fri</div>
+                <div class="calendar-day-header">Sat</div>
+                
+                <div class="calendar-day other-month">24</div>
+                <div class="calendar-day other-month">25</div>
+                <div class="calendar-day other-month">26</div>
+                <div class="calendar-day other-month">27</div>
+                <div class="calendar-day other-month">28</div>
+                <div class="calendar-day other-month">29</div>
+                <div class="calendar-day other-month">30</div>
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+                <div class="calendar-day">3</div>
+                <div class="calendar-day with-appointment">4</div>
+                <div class="calendar-day">5</div>
+                <div class="calendar-day with-appointment">6</div>
+                <div class="calendar-day">7</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+                <div class="calendar-day">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day">12</div>
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+                <div class="calendar-day">19</div>
+                <div class="calendar-day">20</div>
+                <div class="calendar-day">21</div>
+                <div class="calendar-day">22</div>
+                <div class="calendar-day">23</div>
+                <div class="calendar-day">24</div>
+                <div class="calendar-day">25</div>
+                <div class="calendar-day">26</div>
+                <div class="calendar-day">27</div>
+                <div class="calendar-day">28</div>
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+                <div class="calendar-day other-month">1</div>
+                <div class="calendar-day other-month">2</div>
+                <div class="calendar-day other-month">3</div>
+                <div class="calendar-day other-month">4</div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
