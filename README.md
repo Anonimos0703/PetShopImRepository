@@ -67,7 +67,7 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 
-###Contributors
+### Contributors
 <table>
   <tr>
     <td align="center">
