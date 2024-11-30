@@ -67,28 +67,23 @@ python manage.py migrate
 python manage.py runserver
 
 ### Contributors
-<div style="display: flex; justify-content: center; gap: 20px; text-align: center;">
-  <div>
-    <a href="https://github.com/Anonimos0703" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Charles"/>
-      <br />
-      <b style="text-decoration: none;">Charles William Sevenial</b>
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/Anonimos0703" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+      <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100px" height="100px" style="border-radius: 50%; object-fit: cover;" alt="Charles"/>
+      <b style="margin-top: 10px; color: inherit;">Charles William Sevenial</b>
     </a>
   </div>
-
-  <div>
-    <a href="https://github.com/Jared12388" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Jared"/>
-      <br />
-      <b style="text-decoration: none;">Jared Chester Canasa</b>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/Jared12388" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+      <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100px" height="100px" style="border-radius: 50%; object-fit: cover;" alt="Jared"/>
+      <b style="margin-top: 10px; color: inherit;">Jared Chester Canasa</b>
     </a>
   </div>
-
-  <div>
-    <a href="https://github.com/peachlaugh" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Kyrie"/>
-      <br />
-      <b style="text-decoration: none;">Vince Kyrie Seville</b>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/peachlaugh" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+      <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100px" height="100px" style="border-radius: 50%; object-fit: cover;" alt="Kyrie"/>
+      <b style="margin-top: 10px; color: inherit;">Vince Kyrie Seville</b>
     </a>
   </div>
 </div>
