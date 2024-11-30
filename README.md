@@ -67,25 +67,24 @@ python manage.py migrate
 python manage.py runserver
 
 ### Contributors
-<div align="center">
-    <a href="https://github.com/Anonimos0703">
-        <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100" height="100" style="border-radius: 50%;" alt="Charles"/>
-        <br/>
-        <b>Charles William Sevenial</b>
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/Anonimos0703" target="_blank" style="text-decoration: none; color: inherit;">
+      <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100" height="100" style="border-radius: 50%; object-fit: cover;" alt="Charles" />
+      <div style="margin-top: 8px; font-weight: bold;">Charles William Sevenial</div>
     </a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="https://github.com/Jared12388">
-        <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100" height="100" style="border-radius: 50%;" alt="Jared"/>
-        <br/>
-        <b>Jared Chester Canasa</b>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/Jared12388" target="_blank" style="text-decoration: none; color: inherit;">
+      <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100" height="100" style="border-radius: 50%; object-fit: cover;" alt="Jared" />
+      <div style="margin-top: 8px; font-weight: bold;">Jared Chester Canasa</div>
     </a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="https://github.com/peachlaugh">
-        <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100" height="100" style="border-radius: 50%;" alt="Kyrie"/>
-        <br/>
-        <b>Vince Kyrie Seville</b>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <a href="https://github.com/peachlaugh" target="_blank" style="text-decoration: none; color: inherit;">
+      <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100" height="100" style="border-radius: 50%; object-fit: cover;" alt="Kyrie" />
+      <div style="margin-top: 8px; font-weight: bold;">Vince Kyrie Seville</div>
     </a>
+  </div>
 </div>
-
-
 
