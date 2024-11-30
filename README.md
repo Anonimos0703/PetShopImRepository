@@ -72,25 +72,26 @@ python manage.py runserver
   <tr>
     <td align="center">
       <a href="https://github.com/Anonimos0703" target="_blank" style="text-decoration: none;">
-        <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100px;" style="border-radius: 50%;" alt="Charles"/>
+        <img src="https://avatars.githubusercontent.com/u/182414790?s=96&v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Charles"/>
         <br />
-        <b>Charles William Sevenial</b>
+        <b style="text-decoration: none;">Charles William Sevenial</b>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/Jared12388" target="_blank" style="text-decoration: none;">
-        <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100px;" style="border-radius: 50%;" alt="Jared"/>
+        <img src="https://avatars.githubusercontent.com/u/169159638?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Jared"/>
         <br />
-        <b>Jared Chester Canasa</b>
+        <b style="text-decoration: none;">Jared Chester Canasa</b>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/peachlaugh" target="_blank" style="text-decoration: none;">
-        <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100px;" style="border-radius: 50%;" alt="Kyrie"/>
+        <img src="https://avatars.githubusercontent.com/u/106822327?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Kyrie"/>
         <br />
-        <b>Vince Kyrie Seville</b>
+        <b style="text-decoration: none;">Vince Kyrie Seville</b>
       </a>
     </td>
   </tr>
 </table>
+
 
