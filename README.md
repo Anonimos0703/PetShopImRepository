@@ -29,7 +29,6 @@ Once the dependencies are installed, prepare the database by running python mana
 Finally, start the development server using python manage.py runserver.
 
 ## Functionalities
-Functionalities:
 1.) Inventory Management
 Monitor stock levels for various categories like pet food, toys, grooming products, and accessories, ensuring popular items for different pets are always available.
       
