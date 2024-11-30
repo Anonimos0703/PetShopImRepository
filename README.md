@@ -53,17 +53,26 @@ Users can leave detailed written reviews about their experience with the product
 
 ### Prerequisites
 pip install Django
+
 python -m pip install Pillow
 
 ### Installation
 py -m venv myenv
+
 myenv\Scripts\activate
+
 cd account
+
 pip install Django
+
 python -m pip install Pillow
+
 cd account
+
 python manage.py makemigrations
+
 python manage.py migrate
+
 python manage.py runserver
 
 ### Contributors
