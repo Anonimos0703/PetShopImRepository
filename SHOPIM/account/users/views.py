@@ -11,9 +11,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from appointment.models import Appointment
 from django.shortcuts import render, get_object_or_404
-from .models import Product, CartItem, Order,ProductRating
-from .forms import CustomerForm
-from .models import Customer
+from .models import Product, CartItem, Order,ProductRating, Customer
+from .forms import CustomerForm, ProductRatingForm
+from admin_page.models import Product
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Avg
+
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -115,39 +118,10 @@ def add_to_cart(request, id):
                 request.session['cart'][str(id)] = quantity
             request.session.modified = True
         
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             return JsonResponse({'success': True, 'message': 'Product added to cart.'})
         
         return redirect('cart')
-
-# @login_required
-# def cart(request):
-#     cart_items = []
-#     total = 0
-#     insufficient_stock = any(item.quantity > item.product.stock for item in cart_items)
-#     context = {
-#     'cart_items': cart_items,
-#     'total': total,
-#     'insufficient_stock': insufficient_stock,
-# }
-
-#     if request.user.is_authenticated:
-#         cart_items = CartItem.objects.filter(user=request.user)
-#         total = sum(item.get_total_price() for item in cart_items)
-#     else:
-#         if 'cart' in request.session:
-#             cart = request.session['cart']
-#             for product_id, quantity in cart.items():
-#                 product = get_object_or_404(Product, id=product_id)
-#                 cart_items.append({
-#                     'product': product,
-#                     'quantity': quantity,
-#                     'total_price': quantity * product.price,
-#                 })
-#                 total += quantity * product.price
-        
-
-#     return render(request, 'users/cart.html', context,{'cart_items': cart_items, 'total': total})
 
 @login_required
 def cart(request):
@@ -326,8 +300,48 @@ def edit_profile(request):
         form = CustomerForm(instance=customer)
     return render(request, 'users/edit_profile.html', {'form': form})
 
+@login_required
+def rate_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    user_rating = ProductRating.objects.filter(product=product, user=request.user).first()
+
+    if request.method == 'POST':
+        form = ProductRatingForm(request.POST, instance=user_rating)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.product = product
+            rating.user = request.user
+            rating.save()
+
+            if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+                average_rating = ProductRating.objects.filter(product=product).aggregate(Avg('rating'))['rating__avg']
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Rating successfully submitted.',
+                    'average_rating': average_rating
+                })
+            return redirect('product_reviews', product_id=product.id)
+    else:
+        form = ProductRatingForm(instance=user_rating)
+
+    average_rating = ProductRating.objects.filter(product=product).aggregate(Avg('rating'))['rating__avg']
+
+    return render(request, 'users/product_details.html', {
+        'product': product,
+        'form': form,
+        'average_rating': average_rating,
+    })
+
 
 def product_reviews(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     reviews = ProductRating.objects.filter(product=product)
-    return render(request, 'users/product_etails.html', {'product': product, 'reviews': reviews})
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg']  # Calculate average rating
+    return render(request, 'users/product_details.html', {
+        'product': product,
+        'reviews': reviews,
+        'average_rating': average_rating,  # Added to pass average rating to the template
+    })
+
+
+
