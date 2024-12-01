@@ -134,6 +134,26 @@
             color: gold;
         }
 
+        #rating-container {
+            position: relative;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+
+        .rating {
+            position: relative;
+        }
+
+        #average-rating{
+            position: relative;
+            bottom: 20px;
+            left: 300px;
+            font-size: 14px;
+            color: #555;
+        }
+
         @media (max-width: 768px) {
             .product-header {
                 flex-direction: column;
@@ -341,6 +361,13 @@
             color: #333;
         }
 
+        .stock-info {
+            margin-left: 170px;
+            font-size: 16px;
+            color: #333;
+        }
+
+
     </style>
 </head>
 <body>
@@ -402,7 +429,7 @@
                     <h2>{{ product.description }}</h2s>
                 </div>
             </div>    
-            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            <form method="POST" action="{% url 'add_to_cart' product.id %}" id="add-to-cart-form">
                 {% csrf_token %}
                 <div class="quantity-section">
                     {% if user.is_authenticated %}
@@ -411,6 +438,7 @@
                             <input type="number" name="quantity" value="1" min="1" max="100">
                             <input type="hidden" name="product_id" value="{{ product.id }}">
                             <button type="submit">Add to Cart</button>
+                            <span class="stock-info">Stock: {{ product.quantity }}</span>
                         {% else %}
                             <!-- Message for staff users -->
                             <p class="error-message">Staff members cannot add products to the cart.</p>
@@ -422,22 +450,33 @@
                 </div>
             </form>
             
-            <div class="product" data-product-id="{{ product.id }}"> 
-            <div class="container">
-                <h2 class="title">Rate {{ product.name }}</h2>
-                <div class="rating">
-                  <p class="rating-text">Your rating:</p>
-                  <div class="stars">
-                    <svg class="star" data-value="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/></svg>
-                    <svg class="star" data-value="2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/></svg>
-                    <svg class="star" data-value="3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/></svg>
-                    <svg class="star" data-value="4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/></svg>
-                    <svg class="star" data-value="5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/></svg>
-                  </div>
+
+            <form method="post" action="{% url 'rate_product' product.id %}" id="rating-form"> <!-- Ensure correct form action -->
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% for i in "12345" %}
+                <input type="radio" name="rating" value="{{ i }}" id="rating-{{ i }}" style="display:none;">
+                {% endfor %}
+            </form>     
+            <div id="rating-container" class="product" data-product-id="{{ product.id }}"> 
+                <div class="container">
+                    <h2 class="title">Rate {{ product.name }}</h2>
+                    <div class="rating">
+                        <p id="rating-message" class="rating-text">Click on a star to rate this product.</p>
+                        <div class="stars">
+                            {% for i in "12345" %}
+                            <svg class="star" data-value="{{ i }}" onclick="submitRating('{{ i }}')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <polygon points="12,2 15,9 23,9 17,14 19,22 12,18 5,22 7,14 1,9 9,9"/>
+                            </svg>
+                            {% endfor %}
+                        </div>
+                        <div id="average-rating">Average Rating: {{ product.average_rating|default:"No ratings yet" }}</div>
+                            
+                        
+                    </div>
                 </div>
-                <p class="feedback-text">Click on a star to rate this product.</p>
-              </div>
             </div>
+            
 
             <div id="addToCartModal" class="modal">
                 <div class="modal-content">
@@ -457,37 +496,38 @@
                     const closeBtn = document.querySelector('.modal-close');
                     const continueShoppingBtn = document.getElementById('continueShoppingBtn');
                     const viewCartBtn = document.getElementById('viewCartBtn');
-        
+                    const ratingMessage = document.getElementById('rating-message');  // Ensure this is correctly defined
+
                     function openModal() {
                         modal.style.display = 'flex';
                     }
-        
+
                     function closeModal() {
                         modal.style.display = 'none';
                     }
-        
+
                     closeBtn.addEventListener('click', closeModal);
-        
+
                     window.addEventListener('click', function(event) {
                         if (event.target === modal) {
                             closeModal();
                         }
                     });
-        
+
                     continueShoppingBtn.addEventListener('click', function() {
                         closeModal();
                     });
-        
+
                     viewCartBtn.addEventListener('click', function() {
                         window.location.href = '{% url "cart" %}';
                     });
-        
-                    document.querySelector('form').addEventListener('submit', function (event) {
+
+                    document.querySelector('#add-to-cart-form').addEventListener('submit', function(event) {
                         event.preventDefault();
-        
+
                         const form = event.target;
                         const formData = new FormData(form);
-        
+
                         fetch(form.action, {
                             method: 'POST',
                             body: formData,
@@ -509,6 +549,81 @@
                         .catch(error => {
                             console.error('There was a problem with the request:', error);
                             openModal();
+                        });
+                    });
+
+                    function submitRating(value) {
+                        console.log("Star clicked with value:", value);  // Debug log
+                        const input = document.querySelector('input[name="rating"][value="' + value + '"]');
+                        const averageRatingDiv = document.getElementById('average-rating');  // Get the average rating div
+
+                        if (input) {
+                            input.checked = true;
+                            console.log("Rating input checked:", input.checked);  // Debug log
+
+                            const form = document.getElementById('rating-form');
+                            const formData = new FormData(form);
+
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    throw new Error('Network response was not ok.');
+                                }
+                            })
+                            .then(data => {
+                                ratingMessage.textContent = data.message;
+                                averageRatingDiv.textContent = `Average Rating: ${data.average_rating.toFixed(1)}`;  // Update the average rating
+                                console.log("Average Rating:", data.average_rating);  // Log the updated average rating
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the request:', error);
+                            });
+                        } else {
+                            console.log("Rating input not found!");  // Debug log
+                        }
+                    }
+
+                    const stars = document.querySelectorAll('.star');
+                    const ratingDescriptions = {
+                        1: "Very poor",
+                        2: "Poor",
+                        3: "Average",
+                        4: "Good",
+                        5: "Excellent"
+                    };
+
+                    stars.forEach((star, index) => {
+                        star.addEventListener('mouseover', function() {
+                            const rating = this.getAttribute('data-value');
+                            ratingMessage.textContent = ratingDescriptions[rating];
+
+                            // Add hovered class to all previous stars and current star
+                            for (let i = 0; i <= index; i++) {
+                                stars[i].classList.add('hovered');
+                            }
+                        });
+
+                        star.addEventListener('mouseout', function() {
+                            ratingMessage.textContent = 'Click on a star to rate this product.';
+
+                            // Remove hovered class from all stars
+                            stars.forEach(star => {
+                                star.classList.remove('hovered');
+                            });
+                        });
+
+                        star.addEventListener('click', function() {
+                            const rating = this.getAttribute('data-value');
+                            submitRating(rating);
                         });
                     });
                 });
