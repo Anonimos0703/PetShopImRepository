@@ -24,14 +24,17 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(null=True)
     category = models.CharField(max_length=50, choices=CATEGORY, null=True)
     price = models.PositiveBigIntegerField(null=True)
-    description = models.TextField(null=True,blank=True)
+    description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
+
     def average_rating(self):
-        ratings = self.productrating_set.all()  # Use the reverse relationship
-        return sum(rating.rating for rating in ratings) / ratings.count() if ratings.exists() else 0
+        ratings = self.ratings.all()  # Use the reverse relationship
+        average = sum(rating.rating for rating in ratings) / ratings.count() if ratings.exists() else 0
+        return round(average, 1)  # Round to one decimal place
+
     
     def reduce_quantity(self, quantity):
         if self.quantity >= quantity:
