@@ -6,15 +6,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib import messages
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from appointment.models import Appointment
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from .models import Product, CartItem, Order,ProductRating, Customer
 from .forms import CustomerForm, ProductRatingForm
 from admin_page.models import Product
-from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Avg
 
 def signup_view(request):
@@ -29,13 +27,6 @@ def signup_view(request):
         form = SignUpForm()
             
     return render(request, 'users/signup.html', {'form': form})
-
-
-
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 
 def login_view(request):
     if request.method == 'POST':
