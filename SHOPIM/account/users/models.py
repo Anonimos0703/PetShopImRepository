@@ -25,7 +25,7 @@ class Order(models.Model):
         ('Completed', 'Completed'),
         ('Cancelled', 'Cancelled'),
     ]
-    
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
@@ -83,7 +83,6 @@ class ProductRating(models.Model):
 
     def __str__(self):
         return f'{self.product.name} - {self.rating}'
-
 
     class Meta:
         unique_together = ('product', 'user')  # Ensures a user can rate a product only once

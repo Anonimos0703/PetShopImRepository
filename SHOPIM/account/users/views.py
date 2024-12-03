@@ -87,8 +87,6 @@ def uproduct_list(request):
 
     return render(request, 'users/uproduct_list.html', {'products': products})
 
-
-
 def service(request):
     return render(request, 'users/service.html')
 
@@ -127,17 +125,13 @@ def add_to_cart(request, id):
 def cart(request):
     cart_items = []
     total = 0
-    insufficient_stock = False  # Initialize to False
+    insufficient_stock = False
 
-     
-    # Fetch cart items for authenticated users
     cart_items = CartItem.objects.filter(user=request.user)
     total = sum(item.get_total_price() for item in cart_items)
 
-    # Check for insufficient stock using the `quantity` field
     insufficient_stock = any(item.quantity > item.product.quantity for item in cart_items)
 
-    # Consolidate context
     context = {
         'cart_items': cart_items,
         'total': total,
@@ -145,7 +139,6 @@ def cart(request):
     }
 
     return render(request, 'users/cart.html', context)
-
 
 def remove_from_cart(request,id):
     if request.user.is_authenticated:
@@ -159,8 +152,6 @@ def remove_from_cart(request,id):
                 request.session.modified = True
 
     return redirect('cart')
-
-
 
 def home(request):
    # Keep your original query exactly as is
@@ -205,7 +196,7 @@ def checkout(request):
     for cart_item in cart_items:
         if not cart_item.product.reduce_quantity(cart_item.quantity):
             messages.error(request, f'Insufficient stock for {cart_item.product.name}')
-            return redirect('cart')  # Redirect back to cart if stock is insufficient
+            return redirect('cart')
 
     if request.method == 'POST':
         cart_items.delete()
@@ -241,7 +232,6 @@ def process_payment(request):
             return redirect('cart')
 
         try:
-            # Check and reduce product quantities first
             for cart_item in cart_items:
                 if not cart_item.product.reduce_quantity(cart_item.quantity):
                     messages.error(request, f'Insufficient stock for {cart_item.product.name}')
